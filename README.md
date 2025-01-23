@@ -18,7 +18,7 @@ Simulate particle for Chemistry peoject
 
 #### 3. Run julia code
 
-- Open the code folder (MonkieDein/SingleLayerDiffusionModeling) with vsCode you intended to run.
+- Open the code folder (MonkieDein/SingleLayerDiffusionModeling) with vsCode.
 
 - Open terminal and run the following command:
     ```julia requirement.jl```
