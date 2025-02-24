@@ -40,14 +40,15 @@ end
 function anim2D(sims,par,τ;radicalRadius = 0.5,fps=60,secs=length(sims.Time)/fps,
     videoName="animation/3D/3DTo2dAnim.mp4",
     radC = palette(:linear_kryw_0_100_c71_n256, size(sims.P)[2]), 
-    C = [parse(Colorant,"0x66"*c[3:8]) for c in [hex(c,:AARRGGBB) for c in palette(:cool, par.layerR[])] ])
+    C = [parse(Colorant,"0x66"*c[3:8]) for c in [hex(c,:AARRGGBB) for c in palette(:cool, par.layerR[])] ],
+    axislim=par.obj.radius)
     
     N = size(sims.P)[2]
     pos2D = [from3Dto2D(p) for p in sims.P]
     particles = [circumference(par.obj.p.x , par.obj.p.y , R) for R in reverse([par.layerR[][Not(1)];par.obj.radius])]
     I =  round.(Int,range(0,1,round(Int,secs*fps)+1)[Not(1)] .* length(sims.Time))
     video = @animate for i in ProgressBar(I) # 
-        plt = Plots.plot(legend=:outerright , xlim=(-par.obj.radius,par.obj.radius), ylim=(-par.obj.radius,par.obj.radius), 
+        plt = Plots.plot(legend=:outerright , xlim=(-axislim,axislim), ylim=(-axislim,axislim), 
         xlabel = "nm",ylabel = "nm",title = "Radical within multi Layer Particle",size = (700,600))
         Plots.annotate!(plt,[ (par.obj.radius/1.1,par.obj.radius/1.01,(@sprintf("Time: %.7f sec",sims.Time[i]),10,:black)) ] )
         Plots.annotate!(plt,[ (par.obj.radius/1.1,par.obj.radius/1.07,("Oligomer: "*string(sims.Zmer[i,1]),10,:black)) ] )
@@ -73,20 +74,23 @@ function anim3D(sims,par;radicalRadius = 0.5,fps=60,secs=length(sims.Time)/fps,
 
 
     # Initialize first frame, then use observable to update
-    lightPos = Vec3f0( 50,-180,10 )
-
-    fig = mesh(oParticle, color = last(C), shading=true,
-    overdraw=true,lightposition = lightPos ,
-    show_axis=false,figure = (resolution = (1600, 1600),)) #
-    # ,transparency = true
-    # display(fig)
+    # Create the figure with resolution
+    fig = Figure(size = (800, 800))
+    lightPos = Vec3f0( 60,45,10 )    
+    # Set up lighting     # Hide axis spines and ticks
+    ax = LScene(fig[1, 1], show_axis=false, scenekw = (clear=true,lights = [AmbientLight(RGBf(.5, .5, .5)),DirectionalLight(RGBf(1, 1, 1),lightPos)],))
+    # Add the mesh plot
+    mesh!(ax, oParticle, color = last(C), overdraw = true)
+    # multi layers
     for l in length(par.layerR[]):-1:2
-        mesh!(Sphere(Point3f0(positionTuple(par.obj)),par.layerR[][l]), color = (C[l-1]),overdraw=true,lightposition = lightPos ) 
-    end
+        mesh!(Sphere(Point3f0(positionTuple(par.obj)),par.layerR[][l]), color = (C[l-1]),overdraw=true ) 
+    end 
+    # plot radicals
     for j in 1:N
-        mesh!(oRadical[j], color = oRadCol[j] , overdraw=true,lightposition = lightPos)
+        mesh!(oRadical[j], color = oRadCol[j] , overdraw=true) 
     end
 
+    
     I =  round.(Int,range(0,1,round(Int,secs*fps)+1)[Not(1)] .* length(sims.Time))
     record(fig,videoName,I;framerate = fps) do i
     # for i in ProgressBar(I)

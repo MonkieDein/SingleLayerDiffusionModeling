@@ -50,12 +50,14 @@ Local path : use default or choose desire %LOCAL_PATH%
 
 - [Available instruction in youtube](https://www.youtube.com/watch?v=oi5dZxPGNlk&t=204s)
 
-
 ## Directory Structure
+- requirement.jl: Code to nstall all required library
 - code : 
     - 3Dbasics: Basic physics code for 3d objects dynamics
     - reactChem: Chemistry code, chemical reaction simulation and dynamics
     - reactStatsPlots: Create plots or animation from the simulation
     - experiment: Running a MC simulation for each tg and wp
-- plot : 
+- plots : 
     - resulting plot from the simulation
+- animation : 
+    - resulting animation from the simulation
