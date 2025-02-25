@@ -68,22 +68,22 @@ function anim3D(sims,par;radicalRadius = 0.5,fps=60,secs=length(sims.Time)/fps,
     N = size(sims.P)[2]
     L2CMat = [searchsortedlast(par.layerR[],L2Distance(vec(par.obj.p),vec(rad_p))) for rad_p in sims.P]
     # make 3D objects
-    oParticle = Sphere(Point3f0(positionTuple(par.obj)),par.obj.radius) 
-    oRadical = [Observable( Sphere(Point3f0( Tuple(vec(sims.P[1,j])) ),radicalRadius) ) for j in 1:N]
+    oParticle = GeometryBasics.Sphere(Point3f(positionTuple(par.obj)),par.obj.radius) 
+    oRadical = [Observable( GeometryBasics.Sphere(Point3f( Tuple(vec(sims.P[1,j])) ),radicalRadius) ) for j in 1:N]
     oRadCol = [Observable( radC[L2CMat[1,j]] ) for j in 1:N]
 
 
     # Initialize first frame, then use observable to update
     # Create the figure with resolution
     fig = Figure(size = (800, 800))
-    lightPos = Vec3f0( 60,45,10 )    
+    lightPos = Vec3f( 60,45,10 )    
     # Set up lighting     # Hide axis spines and ticks
     ax = LScene(fig[1, 1], show_axis=false, scenekw = (clear=true,lights = [AmbientLight(RGBf(.5, .5, .5)),DirectionalLight(RGBf(1, 1, 1),lightPos)],))
     # Add the mesh plot
     mesh!(ax, oParticle, color = last(C), overdraw = true)
     # multi layers
     for l in length(par.layerR[]):-1:2
-        mesh!(Sphere(Point3f0(positionTuple(par.obj)),par.layerR[][l]), color = (C[l-1]),overdraw=true ) 
+        mesh!(GeometryBasics.Sphere(Point3f(positionTuple(par.obj)),par.layerR[][l]), color = (C[l-1]),overdraw=true ) 
     end 
     # plot radicals
     for j in 1:N
@@ -96,7 +96,7 @@ function anim3D(sims,par;radicalRadius = 0.5,fps=60,secs=length(sims.Time)/fps,
     # for i in ProgressBar(I)
         for j in 1:N
             oRadCol[j][] = radC[L2CMat[i,j]]
-            oRadical[j][] = Sphere(Point3f0( Tuple(vec(sims.P[i,j])) ),radicalRadius)
+            oRadical[j][] = GeometryBasics.Sphere(Point3f( Tuple(vec(sims.P[i,j])) ),radicalRadius)
         end
         # sleep(1e-10) # sleep is required if plot fail to update in realtime
     end

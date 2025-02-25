@@ -1,4 +1,3 @@
-include("reactChem.jl")
 include("reactStatsPlots.jl")
 using StatsBase
 using DelimitedFiles

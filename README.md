@@ -1,5 +1,5 @@
-# particleSimulation
-Simulate particle for Chemistry peoject
+# Summary
+Simulate particle in a Chemical reaction to identify the success rate.
 
 ## Minimal preliminary process:
 
@@ -12,15 +12,13 @@ Simulate particle for Chemistry peoject
 - Install [Julia](https://julialang.org/downloads/) > Current stable release > select your OS installer
 
 - Click the julia installer and install julia.
-
-- When the installation completed select 
-- [x] Run julia > Finish
+- [x] Add Julia to PATH
 
 #### 3. Run julia code
 
-- Open the code folder (MonkieDein/SingleLayerDiffusionModeling) with vsCode.
+- Go into the code folder (SingleLayerDiffusionModeling).
 
-- Open terminal and run the following command:
+- Right click -> Open in terminal and run the following command:
     ```julia requirement.jl```
     ```julia code/experiment.jl```
 
@@ -48,7 +46,7 @@ Local path : use default or choose desire %LOCAL_PATH%
 
 #### 3. VS code : For developing and running code 
 
-- [Available instruction in youtube](https://www.youtube.com/watch?v=oi5dZxPGNlk&t=204s)
+- [Available instruction in youtube](https://www.youtube.com/watch?v=oi5dZxPGNlk)
 
 ## Directory Structure
 - requirement.jl: Code to install all required libraries
