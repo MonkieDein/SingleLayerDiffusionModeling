@@ -19,8 +19,8 @@ Simulate particle in a Chemical reaction to identify the success rate.
 - Go into the code folder (SingleLayerDiffusionModeling).
 
 - Right click -> Open in terminal and run the following command:
-    ```julia requirement.jl```
-    ```julia code/experiment.jl```
+    - ```julia requirement.jl```
+    - ```julia code/experiment.jl```
 
 ## Optional preliminary process:
 
